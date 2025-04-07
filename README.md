@@ -45,7 +45,7 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 
 ## **Technologies Utilisées** 🛠️
 
-- **Java Web (Servlets, JSP)**
+- **Java Web**
 - **Base de données** : MySQL
 - **Chart.js** pour les graphiques statistiques
 - **AJAX** pour la gestion en temps réel de la disponibilité des voitures
