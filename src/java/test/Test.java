@@ -9,13 +9,14 @@ import entities.Client;
 import entities.Location;
 import entities.LocationPK;
 import entities.TypeVoiture;
-import entities.User;
+import org.hibernate.Query;
 import entities.Voiture;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -59,6 +60,30 @@ public class Test {
 
             tx.commit();
             System.out.println("Location enregistrée avec succès !");
+            String marqueCible = "Bentley";
+            String hql = "SELECT DISTINCT l.client FROM Location l WHERE l.voiture.marque = :marque";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("marque", marqueCible);
+
+            List<Client> clients = query.list();
+
+            System.out.println("Clients ayant loué une voiture de marque " + marqueCible + " :");
+            for (Client c : clients) {
+                System.out.println(c.getNom() + " " + c.getPrenom() + " (" + c.getEmail() + ")");
+            }
+            String cinCible = "EE123456";
+            String hql2 = "SELECT DISTINCT l.voiture FROM Location l WHERE l.client.cin = :cin";
+            Query query2 = session.createQuery(hql2);
+            query2.setParameter("cin", cinCible);
+
+            List<Voiture> voitures = query2.list();
+
+            System.out.println("Voitures louées par le client avec CIN " + cinCible + " :");
+            for (Voiture v : voitures) {
+                System.out.println(v.getMarque() + " " + v.getModele() + " (" + v.getAnnee() + ")");
+            }
+
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
