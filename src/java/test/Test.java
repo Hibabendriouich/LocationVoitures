@@ -70,7 +70,7 @@ public class Test {
 
             System.out.println("Clients ayant loué une voiture de marque " + marqueCible + " :");
             for (Client c : clients) {
-                System.out.println(c.getNom() + " " + c.getPrenom() + " (" + c.getEmail() + ")");
+                System.out.println(c.getNom() + " " + c.getPrenom());
             }
             String cinCible = "EE123456";
             String hql2 = "SELECT DISTINCT l.voiture FROM Location l WHERE l.client.cin = :cin";

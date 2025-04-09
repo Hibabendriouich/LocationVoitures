@@ -74,8 +74,10 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 ---
 
 ## **Exécution des tests** 🧪
-
-![Exécution](./images/c1.png)  
-![Exécution](./images/c2.png)  
-![Exécution](./images/c3.png)
-![Exécution](./images/c4.png)
+### **Création de tables**
+![Création de tables](./images/c1.png)  
+![Création de tables](./images/c2.png)  
+### **Insertion de données**
+![Insertion](./images/insertion.png)
+### **Filtrage**
+![Filtre](./images/filtre.png)

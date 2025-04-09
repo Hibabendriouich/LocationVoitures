@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,15 +19,17 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class LocationPK implements Serializable {
 
-    @Temporal(TemporalType.DATE)
-    private Date dateDebut;
-
-    @Temporal(TemporalType.DATE)
-    private Date dateFin;
-
+    @Column(name = "clientId")
     private int client;
+
+    @Column(name = "voitureId")
     private int voiture;
 
+    @Column(name = "dateDebut")
+    private Date dateDebut;
+
+    @Column(name = "dateFin")
+    private Date dateFin;
     public LocationPK() {
     }
 
