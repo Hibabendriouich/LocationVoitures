@@ -5,10 +5,33 @@
  */
 package entities;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  *
  * @author hibaa
  */
-public class Admin {
-    
+@Entity
+@Table(name = "admins")
+public class Admin extends User {
+
+    String matricule;
+
+    public Admin() {
+    }
+
+    public Admin(String matricule, String nom, String prenom, String email, String password) {
+        super(nom, prenom, email, password);
+        this.matricule = matricule;
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+
 }
