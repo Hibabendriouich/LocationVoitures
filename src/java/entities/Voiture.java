@@ -38,11 +38,12 @@ public class Voiture {
     @JoinColumn(name = "typeId")
     private TypeVoiture typeVoiture;
 
-    public Voiture(String marque, String modele, String annee, boolean disponible) {
+    public Voiture(String marque, String modele, String annee, boolean disponible,TypeVoiture tv) {
         this.marque = marque;
         this.modele = modele;
         this.annee = annee;
         this.disponible = disponible;
+        this.typeVoiture=tv;
     }
 
     public Voiture() {
@@ -95,4 +96,14 @@ public class Voiture {
     public void setTypeVoiture(TypeVoiture typeVoiture) {
         this.typeVoiture = typeVoiture;
     }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+    
+    
 }
