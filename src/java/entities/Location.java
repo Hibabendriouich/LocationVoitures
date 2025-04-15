@@ -14,12 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  *
  * @author hibaa
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "findBetweenDate", query = "from Location where dateDebut between :d1 and :d2"),
+})
 @Table(name = "locations")
 public class Location {
 
@@ -35,11 +40,11 @@ public class Location {
     private Date dateFin;
 
     @ManyToOne
-    @JoinColumn(name = "clientId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "client", referencedColumnName = "id", insertable = false, updatable = false)
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "voitureId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "voiture", referencedColumnName = "id", insertable = false, updatable = false)
     private Voiture voiture;
 
     public Location() {

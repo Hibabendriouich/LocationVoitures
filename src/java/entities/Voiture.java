@@ -14,12 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  *
  * @author hibaa
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "findByMarque", query = "from Voiture where marque.id =:id")
+})
 @Table(name = "voitures")
 public class Voiture {
 
@@ -38,12 +43,12 @@ public class Voiture {
     @JoinColumn(name = "typeId")
     private TypeVoiture typeVoiture;
 
-    public Voiture(String marque, String modele, String annee, boolean disponible,TypeVoiture tv) {
+    public Voiture(String marque, String modele, String annee, boolean disponible, TypeVoiture tv) {
         this.marque = marque;
         this.modele = modele;
         this.annee = annee;
         this.disponible = disponible;
-        this.typeVoiture=tv;
+        this.typeVoiture = tv;
     }
 
     public Voiture() {
@@ -104,6 +109,5 @@ public class Voiture {
     public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
-    
-    
+
 }

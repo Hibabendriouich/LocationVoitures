@@ -42,13 +42,11 @@ public class Test {
         voitureDao.create(voiture);
 
         Date dateDebut = new Date();
-        Date dateFin = new Date(dateDebut.getTime() + 3 * 24 * 60 * 60 * 1000);
-        LocationPK pk = new LocationPK(dateDebut, dateFin, client.getId(), voiture.getId());
+        LocationPK pk = new LocationPK(dateDebut, client.getId(), voiture.getId());
 
         Location location = new Location();
         location.setpK(pk);
         location.setDateDebut(dateDebut);
-        location.setDateFin(dateFin);
         location.setClient(client);
         location.setVoiture(voiture);
 

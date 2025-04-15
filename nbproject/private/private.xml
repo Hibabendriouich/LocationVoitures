@@ -3,20 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/AbstractDao.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/entities/LocationPK.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/entities/TypeVoiture.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/AdminDao.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/entities/Location.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/ClientDao.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/config/hibernate.cfg.xml</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/TypeVoitureDao.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/test/Test.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/entities/Voiture.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/VoitureDao.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/LocationDao.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/IDao.java</file>
-            <file>file:/C:/Users/hibaa/OneDrive/Documents/NetBeansProjects/locationVoitures/src/java/dao/UserDao.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/config/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/entities/User.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/services/IService.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/entities/Client.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/entities/Voiture.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/entities/Admin.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/services/ClientService.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/entities/Location.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/entities/LocationPK.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/test/TestClients.java</file>
+            <file>file:/C:/Users/hibaa/Documents/NetBeansProjects/locationVoitures/src/java/test/Test.java</file>
         </group>
     </open-files>
 </project-private>

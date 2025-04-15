@@ -19,23 +19,20 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class LocationPK implements Serializable {
 
-    @Column(name = "clientId")
+    @Column(name = "client")
     private int client;
 
-    @Column(name = "voitureId")
+    @Column(name = "voiture")
     private int voiture;
 
     @Column(name = "dateDebut")
     private Date dateDebut;
 
-    @Column(name = "dateFin")
-    private Date dateFin;
     public LocationPK() {
     }
 
-    public LocationPK(Date dateDebut, Date dateFin, int client, int voiture) {
+    public LocationPK(Date dateDebut, int client, int voiture) {
         this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
         this.client = client;
         this.voiture = voiture;
     }
@@ -46,14 +43,6 @@ public class LocationPK implements Serializable {
 
     public void setDateDebut(Date dateDebut) {
         this.dateDebut = dateDebut;
-    }
-
-    public Date getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(Date dateFin) {
-        this.dateFin = dateFin;
     }
 
     public int getClient() {

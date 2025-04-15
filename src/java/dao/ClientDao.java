@@ -6,6 +6,12 @@
 package dao;
 
 import entities.Client;
+import entities.Voiture;
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -17,4 +23,24 @@ public class ClientDao extends AbstractDao<Client> {
         super(Client.class);
     }
 
+    public List<Client> findClientsByMarqueVoiture(String marque) {
+        Session session = null;
+        Transaction tx = null;
+        List<Client> clients = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            clients = session.getNamedQuery("findClientsByMarqueVoiture").setParameter("marque", marque).list();
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return clients;
+    }
 }
