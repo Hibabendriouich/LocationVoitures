@@ -19,14 +19,15 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class LocationPK implements Serializable {
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "dateDebut")
+    private Date dateDebut;
+
     @Column(name = "client")
     private int client;
 
     @Column(name = "voiture")
     private int voiture;
-
-    @Column(name = "dateDebut")
-    private Date dateDebut;
 
     public LocationPK() {
     }

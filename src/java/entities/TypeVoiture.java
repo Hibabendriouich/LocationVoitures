@@ -12,12 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedNativeQuery;
 
 /**
  *
  * @author hibaa
  */
 @Entity
+@NamedNativeQuery(
+        name = "TypeVoiture.findByTypeId",
+        query = "SELECT * FROM TypeVoiture WHERE id = ?",
+        resultClass = TypeVoiture.class
+    )
 @Table(name = "types")
 public class TypeVoiture {
 

@@ -8,6 +8,10 @@ package services;
 import dao.ClientDao;
 import entities.Client;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -15,35 +19,59 @@ import java.util.List;
  */
 public class ClientService implements IService<Client> {
 
-    private final ClientDao fd;
+    private final ClientDao cd;
 
-    public ClientService(ClientDao fd) {
-        this.fd = fd;
+    public ClientService() {
+        this.cd = new ClientDao();
     }
 
+    public ClientService(ClientDao cd) {
+        this.cd = cd;
+    }
+
+   public Client findClientByEmail(String email) {
+        Session session = null;
+        Transaction tx = null;
+        Client client = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            client = (Client) session.getNamedQuery("findClientByEmail").setParameter("email", email).uniqueResult();
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return client;
+    }
     @Override
     public boolean create(Client o) {
-        return fd.create(o);
+        return cd.create(o);
     }
 
     @Override
     public boolean delete(Client o) {
-        return fd.delete(o);
+        return cd.delete(o);
     }
 
     @Override
     public boolean update(Client o) {
-        return fd.update(o);
+        return cd.update(o);
     }
 
     @Override
     public List<Client> findAll() {
-        return fd.findAll();
+        return cd.findAll();
     }
 
     @Override
     public Client findById(int id) {
-        return fd.findById(id);
+        return cd.findById(id);
     }
 
 }

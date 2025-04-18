@@ -31,6 +31,7 @@ public class Location {
     @EmbeddedId
     private LocationPK pK;
 
+    
     @Temporal(TemporalType.DATE)
     @Column(insertable = false, updatable = false)
     private Date dateDebut;

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedNativeQuery;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  *
@@ -17,6 +18,8 @@ import org.hibernate.annotations.NamedNativeQuery;
  */
 @Entity
 @Table(name = "clients")
+
+@NamedQuery(name = "findClientByEmail", query = "SELECT c FROM Client c WHERE c.email = :email")
 
 @NamedNativeQuery(name = "findClientsByMarqueVoiture", query = "SELECT u.*, c.* FROM voitures v INNER JOIN locations l ON v.id = l.voiture INNER JOIN clients c ON c.id = l.client INNER JOIN users u ON u.id = c.id WHERE v.marque = :marque", resultClass = Client.class)
 public class Client extends User {
