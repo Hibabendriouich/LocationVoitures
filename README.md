@@ -87,3 +87,5 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 ![Inscription](./images/inscription.png)
 ### **Page Liste des clients**
 ![Liste clients](./images/liste.png)
+### **Page Mot de passe oublié**
+![Mot de passe oublié](./images/mdp.png)

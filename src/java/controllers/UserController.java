@@ -41,7 +41,7 @@ public class UserController extends HttpServlet {
                 String email = request.getParameter("email");
                 String pwd = request.getParameter("pwd");
                 us.create(new User(nom, prenom, email, pwd));
-                response.sendRedirect("users/user.jsp");
+                response.sendRedirect("Inscription.jsp");
             } else {
                 String nom = request.getParameter("nom");
                 String prenom = request.getParameter("prenom");
@@ -50,16 +50,16 @@ public class UserController extends HttpServlet {
                 User u = new User(nom, prenom, email, pwd);
                 u.setId(Integer.parseInt(id));
                 us.update(u);
-                response.sendRedirect("users/users.jsp");
+                response.sendRedirect("Inscription.jsp");
             }
         } else if (op.equals("delete")) {
             String id = request.getParameter("id");
             us.delete(us.findById(Integer.parseInt(id)));
-            response.sendRedirect("users/users.jsp");
+            response.sendRedirect("Inscription.jsp");
         } else if (op.equals("update")) {
             String id = request.getParameter("id");
             User u = us.findById(Integer.parseInt(id));
-            response.sendRedirect("users/user.jsp?id=" + u.getId() + "&nom=" + u.getNom() + "&prenom=" + u.getPrenom() + "&email=" + u.getEmail() + "&pwd=" + u.getPassword());
+            response.sendRedirect("Inscription.jsp?id=" + u.getId() + "&nom=" + u.getNom() + "&prenom=" + u.getPrenom() + "&email=" + u.getEmail() + "&pwd=" + u.getPassword());
         }
     }
 

@@ -150,7 +150,7 @@
                             </button>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="Mpob.jsp">Mot de passe oublié</a>
+                            <a href="forgotPassword.jsp">Mot de passe oublié</a>
                             <a href="Inscription.jsp">Créer un compte</a>
                         </div>
                         <% if (request.getParameter("msg") != null) {%>
