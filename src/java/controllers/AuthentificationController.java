@@ -5,7 +5,9 @@
  */
 package controllers;
 
+import entities.Admin;
 import entities.Client;
+import entities.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import services.AdminService;
 import services.ClientService;
 import services.UserService;
 import util.Util;
@@ -21,34 +24,58 @@ import util.Util;
  *
  * @author hibaa
  */
-@WebServlet(name = "Authentification", urlPatterns = {"/Authentification"})
-public class Authentification extends HttpServlet {
+@WebServlet(name = "AuthentificationController", urlPatterns = {"/AuthentificationController"})
+public class AuthentificationController extends HttpServlet {
+
     private UserService us;
+    private AdminService adminService;
+    private ClientService clientService;
 
     @Override
     public void init() throws ServletException {
-        super.init(); 
+        super.init();
         us = new UserService();
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
+        AdminService as = new AdminService();
         ClientService cs = new ClientService();
-        Client c = cs.findClientByEmail(email);
-        
-        if (c != null) {
-            if (c.getPassword().equals(Util.md5(password))) {
+
+        // First, check if user is an admin
+        Admin admin = as.findAdminByEmail(email);
+        if (admin != null) {
+            if (admin.getPassword().equals(password)) {
                 HttpSession session = request.getSession();
-                session.setAttribute("client", c);
-                cs.update(c);
-                response.sendRedirect("welcome.jsp");
+                session.setAttribute("admin", admin);
+                response.sendRedirect("users.jsp");
+                return;
             } else {
-                response.sendRedirect("Authentification.jsp?msg=mot de passe incorrect");
+                response.sendRedirect("Authentification.jsp?msg=Mot de passe incorrect");
+                return;
             }
-        } else {
-            response.sendRedirect("Authentification.jsp?msg=Email introvable");
         }
+
+        // If not admin, check if user is a client
+        Client client = cs.findClientByEmail(email);
+        if (client != null) {
+            if (client.getPassword().equals(password)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("client", client);
+                response.sendRedirect("clients.jsp");
+                return;
+            } else {
+                response.sendRedirect("Authentification.jsp?msg=Mot de passe incorrect");
+                return;
+            }
+        }
+
+        // If neither admin nor client
+        response.sendRedirect("Authentification.jsp?msg=Email introuvable");
     }
 
     @Override

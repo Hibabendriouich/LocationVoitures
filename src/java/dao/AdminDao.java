@@ -6,6 +6,10 @@
 package dao;
 
 import entities.Admin;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -17,4 +21,24 @@ public class AdminDao extends AbstractDao<Admin> {
         super(Admin.class);
     }
 
+    public Admin findAdminByEmail(String email) {
+        Session session = null;
+        Transaction tx = null;
+        Admin admin = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            admin = (Admin) session.getNamedQuery("findAdminByEmail").setParameter("email", email).uniqueResult();
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return admin;
+    }
 }

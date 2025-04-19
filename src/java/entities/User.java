@@ -12,12 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  *
  * @author hibaa
  */
 @Entity
+@NamedQuery(
+    name = "User.findUserByEmail",
+    query = "SELECT u FROM User u WHERE u.email = :email"
+)
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {

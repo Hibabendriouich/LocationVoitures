@@ -8,6 +8,10 @@ package services;
 import dao.AdminDao;
 import entities.Admin;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -23,6 +27,27 @@ public class AdminService implements IService<Admin> {
 
     public AdminService(AdminDao ad) {
         this.ad = ad;
+    }
+
+    public Admin findAdminByEmail(String email) {
+        Session session = null;
+        Transaction tx = null;
+        Admin admin = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            admin = (Admin) session.getNamedQuery("findAdminByEmail").setParameter("email", email).uniqueResult();
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return admin;
     }
 
     @Override

@@ -8,6 +8,9 @@ package services;
 import dao.UserDao;
 import entities.User;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -49,4 +52,27 @@ public class UserService implements IService<User> {
     public User findById(int id) {
         return ud.findById(id);
     }
+    public User findUserByEmail(String email) {
+    Session session = null;
+    Transaction tx = null;
+    User user = null;
+
+    try {
+        session = HibernateUtil.getSessionFactory().openSession();
+        tx = session.beginTransaction();
+
+        user = (User) session
+                .getNamedQuery("User.findByEmail")
+                .setParameter("email", email)
+                .uniqueResult();
+
+        tx.commit();
+    } catch (Exception e) {
+        if (tx != null) tx.rollback();
+    } finally {
+        if (session != null) session.close();
+    }
+
+    return user;
+}
 }

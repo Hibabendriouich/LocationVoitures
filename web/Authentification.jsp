@@ -78,9 +78,9 @@
         .form-wrapper {
             position: absolute;
             top: 50%;
-            left: 70px; /* Ajuste cette valeur pour mieux centrer dans le cadre gris */
+            left: 70px; 
             transform: translateY(-50%);
-            width: 400px; /* Largeur similaire au cadre gris */
+            width: 400px;
             max-width: 90%;
         }
 
@@ -128,20 +128,20 @@
                     <h4><i class="bi bi-person-circle me-2"></i>Authentification</h4>
                 </div>
                 <div class="card-body">
-                    <form <form action="Authentification" method="post">
+                   <form action="/locationVoitures/AuthentificationController" method="post">
+
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" id="email" name="email" class="form-control"
-                                       value="<%= request.getParameter("email") != null ? request.getParameter("email") : ""%>" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Mot de passe</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" id="password" name="password" class="form-control" required>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                         </div>
                         <div class="d-grid mb-3">

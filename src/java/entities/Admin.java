@@ -7,12 +7,14 @@ package entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  *
  * @author hibaa
  */
 @Entity
+@NamedQuery(name = "findAdminByEmail", query = "SELECT a FROM Admin a WHERE a.email = :email")
 @Table(name = "admins")
 public class Admin extends User {
 
