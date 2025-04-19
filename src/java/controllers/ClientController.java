@@ -42,7 +42,7 @@ public class ClientController extends HttpServlet {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 cs.create(new Client(cin, nom, prenom, email, password));
-                response.sendRedirect("clients/page.jsp");
+                response.sendRedirect("clients.jsp");
             } else {
                 String cin = request.getParameter("cin");
                 String nom = request.getParameter("nom");
@@ -52,18 +52,18 @@ public class ClientController extends HttpServlet {
                 Client c = new Client(cin, nom, prenom, email, password);
                 c.setId(Integer.parseInt(id));
                 cs.update(c);
-                response.sendRedirect("clients/page.jsp");
+                response.sendRedirect("clients.jsp");
             }
         } else if (op.equals("delete")) {
             String id = request.getParameter("id");
             cs.delete(cs.findById(Integer.parseInt(id)));
 
-            response.sendRedirect("clients/page.jsp");
+            response.sendRedirect("clients.jsp");
         } else if (op.equals("update")) {
             String id = request.getParameter("id");
             Client c = cs.findById(Integer.parseInt(id));
 
-            response.sendRedirect("clients/page.jsp?id=" + c.getId() + "&nom=" + c.getNom() + "&cin=" + c.getCin());
+            response.sendRedirect("clients.jsp?id=" + c.getId() + "&nom=" + c.getNom() + "&cin=" + c.getCin());
         }
 
     }

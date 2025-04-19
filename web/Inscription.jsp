@@ -135,7 +135,7 @@
     <body>
         <fieldset>
             <legend>Inscrivez-vous</legend>
-            <form method="POST" action="../UserController">
+            <form method="post" action="InscriptionController">
                 <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>" />
                 <table>
                     <tr class="form-group">
@@ -146,6 +146,10 @@
                     <tr class="form-group">
                         <td><label for="prenom">Prénom :</label></td>
                         <td><input type="text" id="prenom" name="prenom" value="<%= request.getParameter("prenom") != null ? request.getParameter("prenom") : "" %>" placeholder="Entrez votre prénom" /></td>  
+                    </tr>
+                     <tr class="form-group">
+                        <td><label for="cin">Cin :</label></td>
+                        <td><input type="text" id="cin" name="cin" value="<%= request.getParameter("cin") != null ? request.getParameter("cin") : "" %>" placeholder="Entrez votre cin" /></td>  
                     </tr>
                     
                     <tr class="form-group">

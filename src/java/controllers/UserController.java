@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import services.ClientService;
 import services.UserService;
 
 /**
@@ -41,7 +42,7 @@ public class UserController extends HttpServlet {
                 String email = request.getParameter("email");
                 String pwd = request.getParameter("pwd");
                 us.create(new User(nom, prenom, email, pwd));
-                response.sendRedirect("Inscription.jsp");
+                response.sendRedirect("Authentification.jsp");
             } else {
                 String nom = request.getParameter("nom");
                 String prenom = request.getParameter("prenom");
@@ -50,12 +51,12 @@ public class UserController extends HttpServlet {
                 User u = new User(nom, prenom, email, pwd);
                 u.setId(Integer.parseInt(id));
                 us.update(u);
-                response.sendRedirect("Inscription.jsp");
+                response.sendRedirect("users.jsp");
             }
         } else if (op.equals("delete")) {
             String id = request.getParameter("id");
             us.delete(us.findById(Integer.parseInt(id)));
-            response.sendRedirect("Inscription.jsp");
+            response.sendRedirect("users.jsp");
         } else if (op.equals("update")) {
             String id = request.getParameter("id");
             User u = us.findById(Integer.parseInt(id));

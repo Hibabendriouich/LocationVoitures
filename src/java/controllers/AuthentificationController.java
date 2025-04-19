@@ -46,7 +46,6 @@ public class AuthentificationController extends HttpServlet {
         AdminService as = new AdminService();
         ClientService cs = new ClientService();
 
-        // First, check if user is an admin
         Admin admin = as.findAdminByEmail(email);
         if (admin != null) {
             if (admin.getPassword().equals(password)) {
@@ -60,7 +59,6 @@ public class AuthentificationController extends HttpServlet {
             }
         }
 
-        // If not admin, check if user is a client
         Client client = cs.findClientByEmail(email);
         if (client != null) {
             if (client.getPassword().equals(password)) {
@@ -74,7 +72,6 @@ public class AuthentificationController extends HttpServlet {
             }
         }
 
-        // If neither admin nor client
         response.sendRedirect("Authentification.jsp?msg=Email introuvable");
     }
 

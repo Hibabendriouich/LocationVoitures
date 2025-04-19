@@ -30,24 +30,7 @@ public class ClientService implements IService<Client> {
     }
 
    public Client findClientByEmail(String email) {
-        Session session = null;
-        Transaction tx = null;
-        Client client = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            tx = session.beginTransaction();
-            client = (Client) session.getNamedQuery("findClientByEmail").setParameter("email", email).uniqueResult();
-            tx.commit();
-        } catch (HibernateException ex) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return client;
+       return cd.findClientByEmail(email);
     }
     @Override
     public boolean create(Client o) {
