@@ -81,6 +81,7 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 ![Insertion](./images/insertion.png)
 ### **Filtrage**
 ![Filtre](./images/filtre.png)
+
 ### **Page d'authentification**
 ![Authentification](./images/authentification.png)
 ### **Page d'inscription**
