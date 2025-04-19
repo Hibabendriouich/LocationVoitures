@@ -83,7 +83,7 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 ![Filtre](./images/filtre.png)
 
 ### **Page d'authentification**
-![Authentification](./images/authentification.png)
+![Login](./images/login.png)
 ### **Page d'inscription**
 ![Inscription](./images/inscription.png)
 ### **Page Liste des clients**
