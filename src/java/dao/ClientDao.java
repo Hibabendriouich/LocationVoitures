@@ -51,12 +51,20 @@ public class ClientDao extends AbstractDao<Client> {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
+            System.out.println("Recherche client avec email : " + email);
             client = (Client) session.getNamedQuery("findClientByEmail").setParameter("email", email).uniqueResult();
             tx.commit();
+
+            if (client != null) {
+                System.out.println("Client trouvé : " + client.getEmail()); 
+            } else {
+                System.out.println("Aucun client trouvé avec l'email : " + email); 
+            }
         } catch (HibernateException ex) {
             if (tx != null) {
                 tx.rollback();
             }
+            ex.printStackTrace();
         } finally {
             if (session != null) {
                 session.close();

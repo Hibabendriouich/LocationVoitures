@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import services.ClientService;
 import services.SendMail;
 
-//Source : www.exelib.net
 /**
  *
  * @author hibaa
@@ -29,6 +28,7 @@ public class Mdob extends HttpServlet {
         String email = request.getParameter("email");
         ClientService cl = new ClientService();
         Client c = cl.findClientByEmail(email);
+        
         if (c != null) {
             String code = String.format("%06d", (int) (Math.random() * 1000000));
 

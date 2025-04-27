@@ -24,6 +24,7 @@ import org.hibernate.annotations.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "findBetweenDate", query = "from Location where dateDebut between :d1 and :d2"),
+    @NamedQuery(name = "Location.findByClient", query = "SELECT l FROM Location l WHERE l.client.id = :idClient")
 })
 @Table(name = "locations")
 public class Location {

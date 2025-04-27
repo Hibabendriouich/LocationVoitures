@@ -1,9 +1,16 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%-- 
+    Document   : updateMotdePasse
+    Created on : 27 avr. 2025, 02:00:03
+    Author     : hibaa
+--%>
+
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Verification</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Modifier le Mot de Passe</title>
         <!-- Bootstrap CSS link -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
@@ -52,15 +59,7 @@
                 margin-bottom: 20px;
             }
 
-            table {
-                width: 100%;
-            }
-
-            td {
-                padding: 10px 0;
-            }
-
-            input[type="number"], input[type="submit"] {
+            input[type="password"], input[type="submit"] {
                 width: 100%;
                 padding: 10px;
                 border-radius: 6px;
@@ -85,6 +84,12 @@
                 margin-top: 10px;
             }
 
+            .success-message {
+                color: #4CAF50;
+                text-align: center;
+                margin-top: 10px;
+            }
+
             @media (max-width: 768px) {
                 fieldset {
                     padding: 20px;
@@ -94,22 +99,41 @@
     </head>
     <body>
         <fieldset>
-            <legend>Verification</legend>
-            <div class="container">
-                <h2 class="mt-5">Vérification du code de réinitialisation</h2>
-                <form action="Verfier" method="post">
-                    <div class="form-group">
-                        <label for="code">Code de vérification</label>
-                        <input type="number" name="code" id="code" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Valider</button>
-                </form>
-
-                <br>
-                <div class="alert alert-danger" style="<%= request.getParameter("msg") != null ? "display:block;" : "display:none;"%>">
-                    <%= request.getParameter("msg") != null ? request.getParameter("msg") : ""%>
+            <legend>Modifier le Mot de Passe</legend>
+            <form action="UpdatePasswordController" method="post">
+                <h3>Entrez votre nouveau mot de passe:</h3>
+                <div class="container">
+                    <h2 class="mt-5">Modification du mot de passe</h2>
+                    <form action="UpdatePasswordController" method="post">
+                        <div class="form-group">
+                            <label for="password">Nouveau mot de passe</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordcnf">Confirmer le mot de passe</label>
+                            <input type="password" name="passwordcnf" id="passwordcnf" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                    </form>
                 </div>
-            </div>
+
+                <!-- Affichage des messages d'erreur ou de succès -->
+                <div>
+                    <%
+                        String error = request.getParameter("error");
+                        String success = request.getParameter("success");
+                        if ("password_mismatch".equals(error)) {
+                    %>
+                    <div class="alert alert-danger">Les mots de passe ne correspondent pas. Veuillez réessayer.</div>
+                    <% } else if ("empty_fields".equals(error)) { %>
+                    <div class="alert alert-warning">Tous les champs doivent être remplis.</div>
+                    <% } else if ("not_logged_in".equals(error)) { %>
+                    <div class="alert alert-danger">Vous devez être connecté pour modifier votre mot de passe.</div>
+                    <% } else if ("password_updated".equals(success)) { %>
+                    <div class="alert alert-success">Votre mot de passe a été mis à jour avec succès.</div>
+                    <% }%>
+                </div>
+            </form>
         </fieldset>
 
         <!-- Bootstrap JS and dependencies (optional) -->

@@ -17,7 +17,7 @@
 
             body {
                 display: flex;
-                justify-content: flex-start;  /* Aligns content to the left */
+                justify-content: flex-start;  
                 background-color: #f5f5f5;
                 min-height: 100vh;
                 padding: 20px;
@@ -218,6 +218,7 @@
         <div class="sidebar">
             <img src="images/logo.png" alt="Logo" class="sidebar-logo">
             <h2>Admin Dashboard</h2>
+            <a href="graphe.jsp" class="btn btn-primary">Statistiques de voitures </a>
         </div>
 
 

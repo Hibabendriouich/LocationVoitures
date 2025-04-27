@@ -5,6 +5,10 @@
  */
 package controllers;
 
+/**
+ *
+ * @author hibaa
+ */
 import entities.Client;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -14,28 +18,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import services.ClientService;
-import util.Util;
 
-/**
- *
- * @author hibaa
- */
-@WebServlet(name = "UpdatePasswordController", urlPatterns = {"/UpdatePasswordController"})
-public class UpdatePasswordController extends HttpServlet {
+@WebServlet(name = "VerificationController", urlPatterns = {"/Verfier"})
+public class VerificationController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String password = request.getParameter("password");
-        String passwordcnf = request.getParameter("passwordcnf");
-        ClientService cl = new ClientService();
-        if (password.equals(passwordcnf)) {
-            HttpSession session = request.getSession();
-            Client c = (Client) session.getAttribute("client");
-            c.setPassword(Util.md5(password));
-            cl.update(c);
-            response.sendRedirect("Authentification.jsp?email=" + c.getEmail());
+        // Récupérer le code saisi par l'utilisateur
+        String code = request.getParameter("code");
+
+        // Récupérer le code de vérification stocké dans la session
+        HttpSession session = request.getSession();
+        String verificationCode = (String) session.getAttribute("verificationCode");
+
+        // Vérifier si le code saisi par l'utilisateur correspond à celui stocké dans la session
+        if (verificationCode != null && verificationCode.equals(code)) {
+            // Le code est valide, rediriger vers la page de modification du mot de passe
+            response.sendRedirect("updatePassword.jsp");
         } else {
-            response.sendRedirect("updateMotdePasse.jsp?email=mot de passe incorrect");
+            // Le code est incorrect, rediriger avec un message d'erreur
+            response.sendRedirect("verification.jsp?msg=Code de vérification incorrect");
         }
     }
 
@@ -53,7 +55,6 @@ public class UpdatePasswordController extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Contrôleur de vérification du code de réinitialisation";
     }
-
 }

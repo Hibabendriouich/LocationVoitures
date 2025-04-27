@@ -22,7 +22,7 @@ public class LocationDao extends AbstractDao<Location> {
     public LocationDao() {
         super(Location.class);
     }
-    
+
     public List<Location> findBetweenDate(Date d1, Date d2) {
         Session session = null;
         Transaction tx = null;
@@ -43,4 +43,25 @@ public class LocationDao extends AbstractDao<Location> {
         }
         return locations;
     }
+
+    public List<Location> getLocationsByClient(int idClient) {
+        Session session = null;
+        Transaction tx = null;
+        List<Location> locations = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            locations = session.getNamedQuery("Location.findByClient").setParameter("idClient", idClient).list();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return locations;
+    }
+
 }

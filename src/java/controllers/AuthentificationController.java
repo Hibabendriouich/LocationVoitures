@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import services.AdminService;
 import services.ClientService;
 import services.UserService;
-import util.Util;
 
 /**
  *
@@ -28,8 +27,8 @@ import util.Util;
 public class AuthentificationController extends HttpServlet {
 
     private UserService us;
-    private AdminService adminService;
-    private ClientService clientService;
+    private AdminService as;
+    private ClientService cs;
 
     @Override
     public void init() throws ServletException {
@@ -43,8 +42,8 @@ public class AuthentificationController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        AdminService as = new AdminService();
-        ClientService cs = new ClientService();
+         as = new AdminService();
+         cs = new ClientService();
 
         Admin admin = as.findAdminByEmail(email);
         if (admin != null) {
@@ -64,7 +63,7 @@ public class AuthentificationController extends HttpServlet {
             if (client.getPassword().equals(password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("client", client);
-                response.sendRedirect("clients.jsp");
+                response.sendRedirect("VoitureController");
                 return;
             } else {
                 response.sendRedirect("Authentification.jsp?msg=Mot de passe incorrect");
