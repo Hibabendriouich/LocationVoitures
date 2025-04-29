@@ -106,8 +106,8 @@
                 </form>
 
                 <br>
-                <div class="alert alert-danger" style="<%= request.getParameter("msg") != null ? "display:block;" : "display:none;"%>">
-                    <%= request.getParameter("msg") != null ? request.getParameter("msg") : ""%>
+                <div class="alert alert-danger" style="<%= request.getAttribute("msg") != null ? "display:block;" : "display:none;"%>">
+                    <%= request.getAttribute("msg") != null ? request.getAttribute("msg") : ""%>
                 </div>
             </div>
         </fieldset>

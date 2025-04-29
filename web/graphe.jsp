@@ -10,14 +10,22 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <style>
-            body {
-                background: linear-gradient(to right, #74ebd5, #ACB6E5);
-                min-height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 20px;
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
+
+            body {
+                display: flex;
+                justify-content: flex-start;  
+                background-color: #f5f5f5;
+                min-height: 100vh;
+                padding: 20px;
+                gap: 20px;
+            }
+
             #chart-container {
                 background: white;
                 padding: 30px;
@@ -25,7 +33,11 @@
                 box-shadow: 0 8px 16px rgba(0,0,0,0.2);
                 max-width: 700px;
                 width: 100%;
+                margin: 0 auto;
+                height : 700px;
+                margin-top: 50px;
             }
+
             .chart-title {
                 text-align: center;
                 margin-bottom: 30px;
@@ -33,13 +45,114 @@
                 font-weight: bold;
                 color: #333;
             }
+
             canvas {
-                max-height: 400px; 
+                max-height: 500px;
+                height: 300px;
+            }
+
+            .sidebar {
+                width: 250px;
+                background-color: #333;
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .sidebar-logo {
+                width: 200px; 
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 40px;
+                font-size: 24px;
+            }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 10px;
+                font-size: 16px;
+                margin-bottom: 15px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease, padding-left 0.3s ease;
+            }
+
+            .sidebar a:hover {
+                background-color: #444;
+                padding-left: 15px;
+            }
+
+            .btn-primary {
+                background-color: #007bff;
+                border-color: #007bff;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn-primary:hover {
+                background-color: #6c757d; 
+                border-color: #6c757d;
+                color: white;
+            }
+
+            @media (max-width: 768px) {
+                body {
+                    flex-direction: column;
+                    padding: 10px;
+                }
+
+                .sidebar {
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+
+                #chart-container {
+                    width: 100%;
+                }
+
+                th, td {
+                    padding: 10px;
+                    font-size: 14px;
+                }
+
+                .sidebar a {
+                    font-size: 14px;
+                    padding: 8px 12px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                canvas {
+                    max-height: 300px;
+                }
+
+                .chart-title {
+                    font-size: 1.5rem;
+                }
             }
         </style>
     </head>
 
     <body>
+        <div class="sidebar">
+            <img src="images/logo.png" alt="Logo" class="sidebar-logo">
+            <h2>Admin Dashboard</h2>
+            <a href="users.jsp">Liste des clients</a>
+            <a href="graphe.jsp">Statistiques de voitures</a>
+        </div>
 
         <div id="chart-container">
             <h1 class="chart-title">Nombre de voitures par type</h1>
@@ -118,6 +231,6 @@
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
     </body>
 </html>
+

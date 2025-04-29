@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
  * @author hibaa
  */
 @WebServlet(name = "deconnexionController", urlPatterns = {"/deconnexionController"})
-
 public class deconnexionController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -26,8 +25,8 @@ public class deconnexionController extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("Authentification.jsp");
 
+        request.getRequestDispatcher("Authentification.jsp").forward(request, response);
     }
 
     @Override
@@ -46,5 +45,4 @@ public class deconnexionController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }

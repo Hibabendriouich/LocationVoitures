@@ -1,8 +1,13 @@
-<%@page import="entities.Client"%>
+<%-- 
+    Document   : updateUser
+    Created on : 29 avr. 2025, 18:51:36
+    Author     : hibaa
+--%>
+<%@page import="entities.User"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    Client user = (Client) request.getAttribute("user");
+    User user = (User) request.getAttribute("user");
 %>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -130,34 +135,34 @@
     </head>
     <body>
         <fieldset>
-            <legend>Inscrivez-vous</legend>
+            <legend>Modification</legend>
             <form method="post" action="UserController">
                 <input type="hidden" name="id" value="<%= user != null ? user.getId() : ""%>" />
                 <table>
                     <tr class="form-group">
                         <td><label for="nom">Nom :</label></td>
-                        <td><input type="text" id="nom" name="nom" value="<%= user != null ? user.getNom() : ""%>" placeholder="Entrez votre nom" /></td>
+                        <td><input type="text" id="nom" name="nom" value="<%= user != null ? user.getNom() : ""%>" placeholder="Entrez le nouveau nom" /></td>
                     </tr>
                     <tr class="form-group">
-                        <td><label for="prenom">Prénom :</label></td>
-                        <td><input type="text" id="prenom" name="prenom" value="<%= user != null ? user.getPrenom() : ""%>" placeholder="Entrez votre prénom" /></td>
+                        <td><label for="prenom">PrÃ©nom :</label></td>
+                        <td><input type="text" id="prenom" name="prenom" value="<%= user != null ? user.getPrenom() : ""%>" placeholder="Entrez le nouveau prÃ©nom" /></td>
                     </tr>
-                   
                     <tr class="form-group">
                         <td><label for="email">Email :</label></td>
-                        <td><input type="text" id="email" name="email" value="<%= user != null ? user.getEmail() : ""%>" placeholder="Entrez votre email" /></td>
+                        <td><input type="text" id="email" name="email" value="<%= user != null ? user.getEmail() : ""%>" placeholder="Entrez le nouveau email" /></td>
                     </tr>
                     <tr class="form-group">
                         <td><label for="mdp">Mot de passe :</label></td>
-                        <td><input type="password" id="mdp" name="pwd" value="<%= user != null ? user.getPassword() : ""%>" placeholder="Entrez votre mot de passe" /></td>
+                        <td><input type="password" id="mdp" name="pwd" value="<%= user != null ? user.getPassword() : ""%>" placeholder="Entrez le nouveau mot de passe" /></td>
                     </tr>
 
                     <tr>
                         <td></td>
                         <td>
-                            <input type="hidden" name="source" value="<%= request.getParameter("admin") != null ? "admin" : "client" %>">
-                            <input type="submit" value="S'inscrire" />
-
+                            <% if ("admin".equals(request.getAttribute("source"))) { %>
+                            <input type="hidden" name="admin" value="true">
+                            <% }%>
+                            <input type="submit" value="Modifier" />
                         </td>
                     </tr>
 
@@ -166,5 +171,3 @@
         </fieldset>
     </body>
 </html>
-
-

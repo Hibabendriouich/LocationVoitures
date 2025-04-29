@@ -100,21 +100,20 @@
     <body>
         <fieldset>
             <legend>Modifier le Mot de Passe</legend>
+            <!-- Single form for password update -->
             <form action="UpdatePasswordController" method="post">
                 <h3>Entrez votre nouveau mot de passe:</h3>
                 <div class="container">
                     <h2 class="mt-5">Modification du mot de passe</h2>
-                    <form action="UpdatePasswordController" method="post">
-                        <div class="form-group">
-                            <label for="password">Nouveau mot de passe</label>
-                            <input type="password" name="password" id="password" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordcnf">Confirmer le mot de passe</label>
-                            <input type="password" name="passwordcnf" id="passwordcnf" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                    </form>
+                    <div class="form-group">
+                        <label for="password">Nouveau mot de passe</label>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordcnf">Confirmer le mot de passe</label>
+                        <input type="password" name="passwordcnf" id="passwordcnf" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
                 </div>
 
                 <!-- Affichage des messages d'erreur ou de succès -->

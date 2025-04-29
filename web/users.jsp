@@ -24,7 +24,6 @@
                 gap: 20px;
             }
 
-            /* Sidebar */
             .sidebar {
                 width: 250px;
                 background-color: #333;
@@ -64,7 +63,6 @@
                 background-color: #444;
             }
 
-            /* Main content area */
             .main-content {
                 flex: 1;
                 background-color: white;
@@ -218,6 +216,7 @@
         <div class="sidebar">
             <img src="images/logo.png" alt="Logo" class="sidebar-logo">
             <h2>Admin Dashboard</h2>
+            <a href="users.jsp">Liste des clients</a>
             <a href="graphe.jsp" class="btn btn-primary">Statistiques de voitures </a>
         </div>
 
@@ -250,9 +249,8 @@
                             <td><%= u.getPrenom()%></td>
                             <td><%= u.getEmail()%></td>
                             <td class="actions-container">
-                                <a href="<%= request.getContextPath()%>/UserController?id=<%= u.getId()%>&op=delete">Supprimer</a>
-                                <a href="<%= request.getContextPath()%>/UserController?id=<%= u.getId()%>&op=update">Modifier</a>
-
+                                <a href="<%= request.getContextPath() + "/UserController?id=" + u.getId() + "&op=delete"%>">Supprimer</a>
+                                <a href="<%= request.getContextPath() + "/UserController?id=" + u.getId() + "&op=update"%>">Modifier</a>
                             </td>
                         </tr>
                         <%
@@ -266,8 +264,10 @@
                     </tbody>
                 </table>
             </fieldset>
+            <input type="hidden" name="source" value="<%= request.getParameter("admin") != null ? "admin" : "client" %>">
+            <a href="Inscription.jsp?admin=true" class="add-button">Ajouter un client</a>
 
-            <a href="Inscription.jsp" class="add-button">Ajouter un client</a>
+
         </div>
     </body>
-</html>
+</html> 

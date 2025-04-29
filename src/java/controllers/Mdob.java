@@ -39,9 +39,10 @@ public class Mdob extends HttpServlet {
             SendMail sed = new SendMail();
             sed.send(code, email);
 
-            response.sendRedirect("verification.jsp");
+            request.getRequestDispatcher("verification.jsp").forward(request, response);
         } else {
-            response.sendRedirect("forgotPassword.jsp?msg=Email n’existe pas");
+            request.setAttribute("msg", "Email n’existe pas");
+            request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
         }
     }
 
@@ -61,5 +62,4 @@ public class Mdob extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }

@@ -42,7 +42,8 @@ public class AdminController extends HttpServlet {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 as.create(new Admin(matricule, nom, prenom, email, password));
-                response.sendRedirect("admins/page.jsp");
+
+                request.getRequestDispatcher("admins/page.jsp").forward(request, response);
             } else {
                 String matricule = request.getParameter("matricule");
                 String nom = request.getParameter("nom");
@@ -52,18 +53,23 @@ public class AdminController extends HttpServlet {
                 Admin a = new Admin(matricule, nom, prenom, email, password);
                 a.setId(Integer.parseInt(id));
                 as.update(a);
-                response.sendRedirect("admins/page.jsp");
+
+                request.getRequestDispatcher("admins/page.jsp").forward(request, response);
             }
         } else if (op.equals("delete")) {
             String id = request.getParameter("id");
             as.delete(as.findById(Integer.parseInt(id)));
 
-            response.sendRedirect("admins/page.jsp");
+            request.getRequestDispatcher("admins/page.jsp").forward(request, response);
         } else if (op.equals("update")) {
             String id = request.getParameter("id");
             Admin a = as.findById(Integer.parseInt(id));
 
-            response.sendRedirect("admins/page.jsp?id=" + a.getId() + "&matricule=" + a.getMatricule() + "&nom=" + a.getNom());
+            request.setAttribute("id", a.getId());
+            request.setAttribute("matricule", a.getMatricule());
+            request.setAttribute("nom", a.getNom());
+
+            request.getRequestDispatcher("admins/page.jsp").forward(request, response);
         }
 
     }

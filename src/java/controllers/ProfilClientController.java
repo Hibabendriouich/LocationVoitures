@@ -28,7 +28,8 @@ public class ProfilClientController extends HttpServlet {
             request.setAttribute("locations", locations);
             request.getRequestDispatcher("profil.jsp").forward(request, response);
         } else {
-            response.sendRedirect("Authentification.jsp?msg=Session expirée");
+            request.setAttribute("msg", "Session expirée");
+            request.getRequestDispatcher("Authentification.jsp").forward(request, response);
         }
     }
 

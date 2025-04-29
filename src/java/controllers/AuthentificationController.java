@@ -42,18 +42,19 @@ public class AuthentificationController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-         as = new AdminService();
-         cs = new ClientService();
+        as = new AdminService();
+        cs = new ClientService();
 
         Admin admin = as.findAdminByEmail(email);
         if (admin != null) {
             if (admin.getPassword().equals(password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("admin", admin);
-                response.sendRedirect("users.jsp");
+                request.getRequestDispatcher("users.jsp").forward(request, response);
                 return;
             } else {
-                response.sendRedirect("Authentification.jsp?msg=Mot de passe incorrect");
+                request.setAttribute("msg", "Mot de passe incorrect");
+                request.getRequestDispatcher("Authentification.jsp").forward(request, response);
                 return;
             }
         }
@@ -63,15 +64,17 @@ public class AuthentificationController extends HttpServlet {
             if (client.getPassword().equals(password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("client", client);
-                response.sendRedirect("VoitureController");
+                request.getRequestDispatcher("VoitureController").forward(request, response);
                 return;
             } else {
-                response.sendRedirect("Authentification.jsp?msg=Mot de passe incorrect");
+                request.setAttribute("msg", "Mot de passe incorrect");
+                request.getRequestDispatcher("Authentification.jsp").forward(request, response);
                 return;
             }
         }
 
-        response.sendRedirect("Authentification.jsp?msg=Email introuvable");
+        request.setAttribute("msg", "Email introuvable");
+        request.getRequestDispatcher("Authentification.jsp").forward(request, response);
     }
 
     @Override
@@ -90,5 +93,4 @@ public class AuthentificationController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }

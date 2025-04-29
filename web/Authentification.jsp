@@ -172,11 +172,12 @@
                         <a href="Inscription.jsp">Créer un compte</a>
                     </div>
 
-                    <% if (request.getParameter("msg") != null) {%>
+                    <% if (request.getAttribute("msg") != null) {%>
                     <div class="mt-3 text-danger text-center">
-                        <%= request.getParameter("msg")%>
+                        <%= request.getAttribute("msg")%>
                     </div>
                     <% }%>
+
                 </form>
             </div>
         </div>

@@ -99,7 +99,7 @@
                     <tr>
                         <td colspan="2">
                             <h4 class="error-message">
-                                <%= request.getParameter("msg") != null ? request.getParameter("msg") : "" %>
+                                <%= request.getAttribute("msg") != null ? request.getAttribute("msg") : "" %>
                             </h4>
 
                         </td>

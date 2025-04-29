@@ -28,14 +28,18 @@ public class UpdatePasswordController extends HttpServlet {
         String password = request.getParameter("password");
         String passwordcnf = request.getParameter("passwordcnf");
         ClientService cl = new ClientService();
+        
         if (password.equals(passwordcnf)) {
             HttpSession session = request.getSession();
             Client c = (Client) session.getAttribute("client");
             c.setPassword(Util.md5(password));
             cl.update(c);
-            response.sendRedirect("Authentification.jsp?email=" + c.getEmail());
+            
+            request.setAttribute("email", c.getEmail());
+            request.getRequestDispatcher("Authentification.jsp").forward(request, response);
         } else {
-            response.sendRedirect("updateMotdePasse.jsp?email=mot de passe incorrect");
+            request.setAttribute("msg", "Mot de passe incorrect");
+            request.getRequestDispatcher("updateMotdePasse.jsp").forward(request, response);
         }
     }
 
@@ -55,5 +59,4 @@ public class UpdatePasswordController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }

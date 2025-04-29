@@ -12,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import services.ClientService;
 import services.UserService;
 
 /**
@@ -34,33 +33,53 @@ public class UserController extends HttpServlet {
             throws ServletException, IOException {
 
         String op = request.getParameter("op");
+        String id = request.getParameter("id");
+
         if (op == null) {
-            String id = request.getParameter("id");
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String email = request.getParameter("email");
+            String pwd = request.getParameter("pwd");
+
             if (id == null || id.isEmpty()) {
-                String nom = request.getParameter("nom");
-                String prenom = request.getParameter("prenom");
-                String email = request.getParameter("email");
-                String pwd = request.getParameter("pwd");
-                us.create(new User(nom, prenom, email, pwd));
-                response.sendRedirect("Authentification.jsp");
+                if (nom != null && prenom != null && email != null && pwd != null
+                        && !nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !pwd.isEmpty()) {
+                    us.create(new User(nom, prenom, email, pwd));
+                    String source = request.getParameter("source");
+
+                    if ("admin".equals(source)) {
+                        response.sendRedirect("users.jsp");
+                    } else {
+                        response.sendRedirect("Authentification.jsp");
+                    }
+
+                } else {
+                    request.getRequestDispatcher("Inscription.jsp").forward(request, response);
+                }
             } else {
-                String nom = request.getParameter("nom");
-                String prenom = request.getParameter("prenom");
-                String email = request.getParameter("email");
-                String pwd = request.getParameter("pwd");
                 User u = new User(nom, prenom, email, pwd);
                 u.setId(Integer.parseInt(id));
                 us.update(u);
-                response.sendRedirect("users.jsp");
+                request.getRequestDispatcher("users.jsp").forward(request, response);
             }
-        } else if (op.equals("delete")) {
-            String id = request.getParameter("id");
-            us.delete(us.findById(Integer.parseInt(id)));
-            response.sendRedirect("users.jsp");
-        } else if (op.equals("update")) {
-            String id = request.getParameter("id");
-            User u = us.findById(Integer.parseInt(id));
-            response.sendRedirect("Inscription.jsp?id=" + u.getId() + "&nom=" + u.getNom() + "&prenom=" + u.getPrenom() + "&email=" + u.getEmail() + "&pwd=" + u.getPassword());
+
+        } else if ("delete".equals(op)) {
+            if (id != null && !id.isEmpty()) {
+                us.delete(us.findById(Integer.parseInt(id)));
+            }
+            request.getRequestDispatcher("users.jsp").forward(request, response);
+
+        } else if ("update".equals(op)) {
+            if (id != null && !id.isEmpty()) {
+                User u = us.findById(Integer.parseInt(id));
+                request.setAttribute("user", u);
+                request.getRequestDispatcher("updateUser.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("users.jsp").forward(request, response);
+            }
+
+        } else {
+            request.getRequestDispatcher("users.jsp").forward(request, response);
         }
     }
 
@@ -78,7 +97,6 @@ public class UserController extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "User Controller Servlet";
     }
-
 }

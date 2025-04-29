@@ -52,7 +52,14 @@ public class ClientController extends HttpServlet {
                 Client c = new Client(cin, nom, prenom, email, password);
                 c.setId(Integer.parseInt(id));
                 cs.update(c);
-                response.sendRedirect("clients.jsp");
+
+                request.setAttribute("id", c.getId());
+                request.setAttribute("cin", c.getCin());
+                request.setAttribute("nom", c.getNom());
+                request.setAttribute("prenom", c.getPrenom());
+                request.setAttribute("email", c.getEmail());
+
+                request.getRequestDispatcher("/clients.jsp").forward(request, response);  
             }
         } else if (op.equals("delete")) {
             String id = request.getParameter("id");
@@ -63,8 +70,14 @@ public class ClientController extends HttpServlet {
             String id = request.getParameter("id");
             Client c = cs.findById(Integer.parseInt(id));
 
-            response.sendRedirect("clients.jsp?id=" + c.getId() + "&nom=" + c.getNom() + "&cin=" + c.getCin());
-        }
+            request.setAttribute("id", c.getId());
+            request.setAttribute("nom", c.getNom());
+            request.setAttribute("cin", c.getCin());
+            request.setAttribute("prenom", c.getPrenom());
+            request.setAttribute("email", c.getEmail());
 
+            request.getRequestDispatcher("/clients.jsp").forward(request, response);
+        }
     }
 }
+

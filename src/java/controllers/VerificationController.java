@@ -9,7 +9,6 @@ package controllers;
  *
  * @author hibaa
  */
-import entities.Client;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,27 +16,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import services.ClientService;
 
 @WebServlet(name = "VerificationController", urlPatterns = {"/Verfier"})
 public class VerificationController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Récupérer le code saisi par l'utilisateur
-        String code = request.getParameter("code");
+        String code = (String) request.getAttribute("code");
 
-        // Récupérer le code de vérification stocké dans la session
         HttpSession session = request.getSession();
         String verificationCode = (String) session.getAttribute("verificationCode");
 
-        // Vérifier si le code saisi par l'utilisateur correspond à celui stocké dans la session
         if (verificationCode != null && verificationCode.equals(code)) {
-            // Le code est valide, rediriger vers la page de modification du mot de passe
-            response.sendRedirect("updatePassword.jsp");
+            request.getRequestDispatcher("updatePassword.jsp").forward(request, response); 
         } else {
-            // Le code est incorrect, rediriger avec un message d'erreur
-            response.sendRedirect("verification.jsp?msg=Code de vérification incorrect");
+            request.setAttribute("msg", "Code de vérification incorrect");
+            request.getRequestDispatcher("verification.jsp").forward(request, response); 
         }
     }
 

@@ -51,7 +51,6 @@
             </thead>
             <tbody>
                 <%
-                    // Afficher chaque location
                     for (Location loc : locations) {
                 %>
                     <tr>
