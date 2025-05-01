@@ -7,6 +7,7 @@ package entities;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,12 +24,17 @@ import org.hibernate.annotations.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findByMarque", query = "from Voiture where marque.id =:id"),
+    @NamedQuery(name = "findByMarque", query = "from Voiture where marque = :marque"),
     @NamedQuery(name = "Voiture.findAll", query = "SELECT v FROM Voiture v"),
-    @NamedQuery( name = "Voiture.countByType", query = "SELECT v.typeVoiture AS typeVoiture, COUNT(v) AS voitureCount " + "FROM Voiture v " +
-            "GROUP BY v.typeVoiture " +
-            "ORDER BY voitureCount DESC" )
-    })
+    @NamedQuery(
+            name = "Voiture.countByType",
+            query = "SELECT v.typeVoiture AS typeVoiture, COUNT(v) AS voitureCount "
+            + "FROM Voiture v "
+            + "GROUP BY v.typeVoiture "
+            + "ORDER BY voitureCount DESC"
+    )
+
+})
 
 @Table(name = "voitures")
 public class Voiture {
@@ -46,7 +52,7 @@ public class Voiture {
     @OneToMany(mappedBy = "voiture")
     private List<Location> locations;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "typeId")
     private TypeVoiture typeVoiture;
 
@@ -57,7 +63,7 @@ public class Voiture {
         this.disponible = disponible;
         this.typeVoiture = tv;
         this.photo = photo;
-        this.prix=prix;
+        this.prix = prix;
     }
 
     public Voiture() {
@@ -120,7 +126,7 @@ public class Voiture {
     }
 
     public void setType(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public String getPhoto() {
@@ -130,6 +136,7 @@ public class Voiture {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
     public double getPrix() {
         return prix;
     }

@@ -2,6 +2,8 @@
 <%@ page import="entities.Location" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="services.LocationService" %>
+<%@ page import="entities.Client" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
@@ -258,14 +260,21 @@
     <div class="sidebar">
         <img src="images/logo.png" alt="Logo" class="sidebar-logo">
         <h2>Admin Dashboard</h2>
+        <a href="VoitureController" class="profil-btn">Voitures</a>
         <a href="profil.jsp" class="profil-btn">Profil</a>
         <a href="DeconnexionController" class="profil-btn">Déconnexion</a>
     </div>
     <h1>Historique de mes locations</h1>
+<%
+    Client client = (Client) session.getAttribute("client");
+    if (client == null) {
+        response.sendRedirect("Authentification.jsp");
+        return;
+    }
 
-    <%
-        List<Location> locations = (List<Location>) request.getAttribute("locations");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    LocationService ls = new LocationService();
+    List<Location> locations = ls.getLocationsByClient(client.getId());
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         if (locations != null && !locations.isEmpty()) {
     %>

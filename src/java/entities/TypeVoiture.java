@@ -34,7 +34,8 @@ public class TypeVoiture {
     private String description;
 
     @OneToMany(mappedBy = "typeVoiture")
-    private List<Voiture> voitures;
+private List<Voiture> voitures;
+
 
     public TypeVoiture() {
     }

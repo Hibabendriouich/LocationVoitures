@@ -46,18 +46,38 @@ public class LocationDao extends AbstractDao<Location> {
     }
 
     public List<Location> getLocationsByClient(int clientId) {
-    Session session = null;
-    try {
-        session = HibernateUtil.getSessionFactory().openSession();
-        return session.createQuery("SELECT l FROM Location l " +"JOIN FETCH l.voiture " +"WHERE l.id.client = :clientId").setParameter("clientId", clientId).list();  
-    } catch (Exception e) {
-        e.printStackTrace();
-        return Collections.emptyList();
-    } finally {
-        if (session != null) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            return (List<Location>) session.createQuery(
+                    "SELECT l FROM Location l "
+                    + "JOIN FETCH l.voiture v "
+                    + "JOIN FETCH v.type "
+                    + "WHERE l.id.client = :clientId")
+                    .setParameter("clientId", clientId)
+                    .list();
+        } finally {
             session.close();
         }
     }
-}
+
+    public boolean isCarAvailable(int voiture, Date dateDebut, Date dateFin) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Long count = (Long) session.createQuery(
+                    "SELECT COUNT(l) FROM Location l WHERE "
+                    + "l.id.voiture = :voiture AND "
+                    + "NOT (l.dateFin < :dateDebut OR l.id.dateDebut > :dateFin)")
+                    .setParameter("voiture", voiture)
+                    .setParameter("dateDebut", dateDebut)
+                    .setParameter("dateFin", dateFin)
+                    .uniqueResult();
+            return count == 0;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 
 }

@@ -5,7 +5,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
     response.setDateHeader("Expires", 0);
-    %>
+%>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -235,10 +235,24 @@
                     font-size: 13px;
                 }
             }
+            .btn-louer {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 25px;
+                font-weight: 600;
+                border: none;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
 
+            .btn-louer:hover {
+                background-color: #3e9142;
+                transform: scale(1.05);
+            }
         </style>
         <%
-            if ( (session.getAttribute("admin") == null && session.getAttribute("client") == null)) {
+            if ((session.getAttribute("admin") == null && session.getAttribute("client") == null)) {
                 response.sendRedirect("Authentification.jsp");
                 return;
             }
@@ -249,6 +263,7 @@
         <div class="sidebar">
             <img src="images/logo.png" alt="Logo" class="sidebar-logo">
             <h2>Admin Dashboard</h2>
+            <a href="VoitureController" class="profil-btn">Voitures</a>
             <a href="profil.jsp" class="profil-btn">Profil</a>
             <a href="DeconnexionController" class="profil-btn">Déconnexion</a>
         </div>
@@ -271,7 +286,7 @@
                                 <h6 class="card-text mb-3">Prix/j : <span class="text-success fw-semibold">${voiture.prix} MAD</span></h6>
 
                                 <div class="d-flex justify-content-center">
-                                    <a href="louer.jsp?id=${voiture.id}" class="button text-decoration-none">Louer</a>
+                                    <button class="button text-decoration-none btn-louer" data-voiture-id="${voiture.id}">Louer</button>
                                 </div>
                             </div>
 
@@ -283,5 +298,50 @@
 
         <!-- Bootstrap JS et dépendances -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="modal fade" id="locationModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="${pageContext.request.contextPath}/LocationController" method="post">
+                        <input type="hidden" name="voiture" id="modalVoitureId">
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Date de début</label>
+                                <input type="date" name="dateDebut" class="form-control" required 
+                                       min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())%>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Date de fin</label>
+                                <input type="date" name="dateFin" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button href="profil.jsp" type="submit" class="btn btn-primary">Confirmer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Gestion du modal de location
+                const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
+                        document.querySelectorAll('.btn-louer').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.getElementById('modalVoitureId').value = this.dataset.voitureId;
+                    locationModal.show();
+                });
+            });
+            // Validation des dates
+            const dateDebut = document.querySelector('input[name="dateDebut"]');
+                    const dateFin = document.querySelector('input[name="dateFin"]');
+                    dateDebut.addEventListener('change', function () {
+                        dateFin.min = this.value;
+                    });
+            });
+        </script>
     </body>
 </html>

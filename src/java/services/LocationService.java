@@ -18,10 +18,10 @@ public class LocationService {
 
     private EntityManager em;
     
-    public List<Location> getLocationsByClient(Long clientId) {
+    public List<Location> getLocationsByClient(int client) {
         try {
-            return em.createQuery("SELECT l FROM Location l WHERE l.client.id = :clientId", Location.class)
-                    .setParameter("clientId", clientId)
+            return em.createQuery("SELECT l FROM Location l WHERE l.client.id = :client", Location.class)
+                    .setParameter("client", client)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();

@@ -25,6 +25,7 @@
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>
+                <root id="src.conf.dir"/>
                 <root id="src.dir"/>
             </source-roots>
             <test-roots>
