@@ -23,7 +23,6 @@ import util.HibernateUtil;
 public class Test {
 
     public static void main(String[] args) {
-        //  HibernateUtil.getSessionFactory();
         ClientDao clientDao = new ClientDao();
         TypeVoitureDao type = new TypeVoitureDao();
         VoitureDao voitureDao = new VoitureDao();
@@ -32,23 +31,22 @@ public class Test {
         UserDao ud = new UserDao();
         ClientDao client = new ClientDao();
 
-        /*
+        
         
          clientDao.create(new Client("EE123456", "Ben Driouich", "Hiba", "hiba@gmail.com", "hiba123"));
 
-         
+         /*
          type.create(new TypeVoiture("luxe", "haut de gamme"));
-
-         voitureDao.create(new Voiture("bmw", "serie 5", "2019", true, type.findById(1)));
-         */
+         voitureDao.create(new Voiture("bmw", "serie 5",  "2019", true, type.findById(1), "bmw.png", 350));
+         
         Date dateDebut = new Date();
         Date dateFin = new Date();
 
         Client c = clientDao.findById(1);
         Voiture v = voitureDao.findById(1);
 
-        LocationPK pk = new LocationPK(dateDebut, c.getId(), v.getId());
-        Location loc = new Location(pk, dateDebut, dateFin, c, v);
+        LocationPK pk = new LocationPK(client, voiture, dateDebut);
+        Location loc = new Location(pk, dateFin);
         locationDao.create(loc);
         System.out.println("Location enregistrée avec succès !"); 
 

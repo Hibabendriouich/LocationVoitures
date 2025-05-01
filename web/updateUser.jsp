@@ -8,6 +8,11 @@
 <%
     User user = (User) request.getAttribute("user");
 %>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+    %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -132,6 +137,12 @@
                 }
             }
         </style>
+        <%
+            if ((session.getAttribute("admin") == null && session.getAttribute("client") == null)) {
+                response.sendRedirect("Authentification.jsp");
+                return;
+            }
+        %>
     </head>
     <body>
         <fieldset>

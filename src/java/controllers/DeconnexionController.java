@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import java.io.IOException;
@@ -17,16 +12,22 @@ import javax.servlet.http.HttpSession;
  *
  * @author hibaa
  */
-@WebServlet(name = "deconnexionController", urlPatterns = {"/deconnexionController"})
-public class deconnexionController extends HttpServlet {
+@WebServlet(name = "DeconnexionController", urlPatterns = {"/DeconnexionController"})
+public class DeconnexionController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        session.invalidate();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
 
-        request.getRequestDispatcher("Authentification.jsp").forward(request, response);
+        response.sendRedirect("Authentification.jsp");
     }
 
     @Override
@@ -43,6 +44,6 @@ public class deconnexionController extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Servlet de déconnexion";
     }
 }

@@ -20,7 +20,7 @@ public class ProfilClientController extends HttpServlet {
         
         HttpSession session = request.getSession();
         Client client = (Client) session.getAttribute("client");
-
+        
         if (client != null) {
             LocationDao locationDao = new LocationDao();
             List<Location> locations = locationDao.getLocationsByClient(client.getId());

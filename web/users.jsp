@@ -1,6 +1,15 @@
 <%@page import="entities.User"%>
 <%@page import="services.UserService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
+
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+  
+%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -211,6 +220,14 @@
                 }
             }
         </style>
+        <%
+            if ((session.getAttribute("admin") == null && session.getAttribute("client") == null)) {
+                response.sendRedirect("Authentification.jsp");
+                return;
+            }
+        %>
+        
+
     </head>
     <body>
         <div class="sidebar">
@@ -218,6 +235,7 @@
             <h2>Admin Dashboard</h2>
             <a href="users.jsp">Liste des clients</a>
             <a href="graphe.jsp" class="btn btn-primary">Statistiques de voitures </a>
+            <a href="DeconnexionController" class="btn btn-primary">Déconnexion </a>
         </div>
 
 
@@ -264,7 +282,7 @@
                     </tbody>
                 </table>
             </fieldset>
-            <input type="hidden" name="source" value="<%= request.getParameter("admin") != null ? "admin" : "client" %>">
+            <input type="hidden" name="source" value="<%= request.getParameter("admin") != null ? "admin" : "client"%>">
             <a href="Inscription.jsp?admin=true" class="add-button">Ajouter un client</a>
 
 

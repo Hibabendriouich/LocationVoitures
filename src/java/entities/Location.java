@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
+import javax.persistence.FetchType;
 
 /**
  *
@@ -23,57 +24,43 @@ import org.hibernate.annotations.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findBetweenDate", query = "from Location where dateDebut between :d1 and :d2"),
-    @NamedQuery(name = "Location.findByClient", query = "SELECT l FROM Location l WHERE l.client.id = :idClient")
+    @NamedQuery(name = "findBetweenDate", 
+               query = "SELECT l FROM Location l WHERE l.id.dateDebut BETWEEN :d1 AND :d2"),
+    @NamedQuery(name = "Location.findByClient",
+               query = "SELECT l FROM Location l JOIN FETCH l.voiture WHERE l.id.client = :idClient")
 })
-@Table(name = "locations")
 public class Location {
-
     @EmbeddedId
-    private LocationPK pK;
+    private LocationPK id;
 
-    
-    @Temporal(TemporalType.DATE)
-    @Column(insertable = false, updatable = false)
-    private Date dateDebut;
-
-    @Temporal(TemporalType.DATE)
-    @Column(insertable = false, updatable = false)
+    @Temporal(TemporalType.DATE)  
+    @Column(name = "dateFin")     
     private Date dateFin;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client", referencedColumnName = "id", insertable = false, updatable = false)
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voiture", referencedColumnName = "id", insertable = false, updatable = false)
     private Voiture voiture;
 
-    public Location() {
-    }
+    public Location() {}
 
-    public Location(LocationPK pK, Date dateDebut, Date dateFin, Client client, Voiture voiture) {
-        this.pK = pK;
-        this.dateDebut = dateDebut;
+    public Location(LocationPK id, Date dateFin) {
+        this.id = id;
         this.dateFin = dateFin;
-        this.client = client;
-        this.voiture = voiture;
-    }
-
-    public LocationPK getpK() {
-        return pK;
-    }
-
-    public void setpK(LocationPK pK) {
-        this.pK = pK;
     }
 
     public Date getDateDebut() {
-        return dateDebut;
+    return this.id.getDateDebut();
+}
+    public LocationPK getId() {
+        return id;
     }
 
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
+    public void setId(LocationPK id) {
+        this.id = id;
     }
 
     public Date getDateFin() {
@@ -99,5 +86,4 @@ public class Location {
     public void setVoiture(Voiture voiture) {
         this.voiture = voiture;
     }
-
 }

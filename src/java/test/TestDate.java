@@ -18,7 +18,7 @@ public class TestDate {
     public static void main(String[] args) {
         LocationDao ld = new LocationDao();
         for (Location l : ld.findBetweenDate(new Date("2025/04/01"), new Date("2025/04/31"))) {
-            System.out.println(l.getDateDebut() + ", " + l.getVoiture().getMarque() + " ," + l.getClient().getNom());
+            System.out.println(l.getDateFin() + ", " + l.getVoiture().getMarque() + " ," + l.getClient().getNom());
         }
     }
 }

@@ -6,6 +6,7 @@
 package dao;
 
 import entities.Location;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -44,24 +45,19 @@ public class LocationDao extends AbstractDao<Location> {
         return locations;
     }
 
-    public List<Location> getLocationsByClient(int idClient) {
-        Session session = null;
-        Transaction tx = null;
-        List<Location> locations = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            tx = session.beginTransaction();
-            locations = session.getNamedQuery("Location.findByClient").setParameter("idClient", idClient).list();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+    public List<Location> getLocationsByClient(int clientId) {
+    Session session = null;
+    try {
+        session = HibernateUtil.getSessionFactory().openSession();
+        return session.createQuery("SELECT l FROM Location l " +"JOIN FETCH l.voiture " +"WHERE l.id.client = :clientId").setParameter("clientId", clientId).list();  
+    } catch (Exception e) {
+        e.printStackTrace();
+        return Collections.emptyList();
+    } finally {
+        if (session != null) {
+            session.close();
         }
-        return locations;
     }
+}
 
 }
