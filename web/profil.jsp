@@ -4,304 +4,341 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="services.LocationService" %>
 <%@ page import="entities.Client" %>
+<%@ page import="entities.Voiture" %>
+
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
     response.setDateHeader("Expires", 0);
-    %>
+%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Mon Profil - Historique des locations</title>
+    <title>Historique des Locations | Luxury Drive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px auto;
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #34495e;
+            --success: #27ae60;
         }
-        th, td {
-            border: 1px solid #999;
-            padding: 10px;
-            text-align: center;
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
-        th {
-            background-color: #4CAF50;
+        
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px; /* Réduit de 280px */
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2b3c 100%);
             color: white;
+            padding: 30px 15px; /* Padding réduit sur les côtés */
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            z-index: 100;
         }
-        h1 {
+        
+        .sidebar-logo {
+            width: 160px; /* Logo légèrement plus petit */
+            margin: 0 auto 30px;
+            display: block;
+        }
+        
+        .sidebar h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 1.3rem;
             text-align: center;
-            margin-top: 30px;
         }
-         body {
-                font-family: 'Montserrat', sans-serif;
-                background: linear-gradient(to right, #f8f9fa, #e9ecef);
-                position: relative;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 1200px;  /* Ou une autre valeur que tu préfères */
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-
+        
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px; /* Espace entre les boutons */
+        }
+        
+        .profil-btn {
+            display: flex;
+            align-items: center;
+            width: auto; /* Largeur automatique au lieu de 100% */
+            padding: 10px 15px; /* Padding réduit */
+            margin: 0;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .profil-btn i {
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+        
+        .profil-btn:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px; /* Ajout de 30px d'espace (250px sidebar + 30px) */
+            padding: 40px;
+            max-width: calc(100% - 280px); /* Empêche le débordement */
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        /* Table Styling */
+        .rental-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .rental-table thead th {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+        
+        .rental-table tbody tr {
+            transition: all 0.2s ease;
+        }
+        
+        .rental-table tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .rental-table tbody td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        
+        .car-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .car-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--accent);
+        }
+        
+        .date-badge {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .date-badge i {
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .no-rentals {
+            text-align: center;
+            padding: 50px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .no-rentals i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .no-rentals p {
+            font-size: 1.1rem;
+            color: #777;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
             .sidebar {
-                width: 250px;
-                background-color: #333;
-                color: white;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100%;
+                width: 220px;
+                padding: 25px 10px;
             }
-
-            .sidebar-logo {
-                width: 200px; 
-                height: auto;
-                margin-bottom: 20px;
+            
+            .main-content {
+                margin-left: 250px;
+                padding: 30px;
+                max-width: calc(100% - 250px);
             }
-
-            h1, h2 {
-                text-align: center; /* Assurer que les titres sont bien centrés */
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
                 width: 100%;
-            }
-
-
-            h1 {
-                font-weight: 700;
-                color: #343a40;
-                margin-bottom: 2rem;
-            }
-
-            .car-card {
-                border: none;
-                border-radius: 15px;
-                overflow: hidden;
-                transition: all 0.3s ease-in-out;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-                background-color: white;
-            }
-
-            .car-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 16px 24px rgba(0, 0, 0, 0.15);
-            }
-
-            .card-img-top {
-                height: 200px;
-                object-fit: cover;
-            }
-
-            .card-title {
-                font-weight: 600;
-            }
-
-            .badge-available {
-                background-color: #28a745;
-            }
-
-            .badge-unavailable {
-                background-color: #dc3545;
-            }
-
-            .card-body {
-                padding: 1.25rem;
-            }
-
-            .car-type {
-                background-color: #6c757d;
-                color: white;
-                padding: 0.25rem 0.6rem;
-                font-size: 0.8rem;
-                border-radius: 10px;
-                display: inline-block;
-            }
-
-            a {
-                text-decoration: none;
-                padding: 8px 12px;
-                border-radius: 5px;
-                font-weight: 500;
-                font-size: 14px;
-                transition: all 0.3s ease;
-                display: inline-block;
-            }
-
-            a[href*="delete"] {
-                background-color: #ff5252;
-                color: white;
-            }
-
-            a[href*="delete"]:hover {
-                background-color: #e04646;
-            }
-
-            a[href*="update"] {
-                background-color: #FFCC00;
-                color: white;
-            }
-
-            a[href*="update"]:hover {
-                background-color: #fde278;
-            }
-
-            .button {
-                display: inline-block;
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 25px;
-                font-weight: 600;
-                transition: background-color 0.3s ease, transform 0.2s ease;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .button:hover {
-                background-color: #3e9142;
-                transform: scale(1.05);
-                text-decoration: none;
-            }
-            .sidebar {
-                width: 250px;
-                background-color: #333;
-                color: white;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .sidebar-logo {
-                width: 180px; 
+                position: relative;
                 height: auto;
-                margin-bottom: 30px;
+                padding: 20px;
             }
-
-            .sidebar h2 {
-                margin-bottom: 40px;
-                font-size: 24px;
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+                max-width: 100%;
             }
-
-            .sidebar a {
-                color: white;
-                text-decoration: none;
+            
+            .rental-table {
                 display: block;
-                padding: 10px;
-                font-size: 16px;
-                margin-bottom: 15px;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
+                overflow-x: auto;
             }
-
-            .sidebar a:hover {
-                background-color: #444;
+            
+            .nav-links {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-
+            
             .profil-btn {
-                background-color: #9c1330;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 30px;
-                font-weight: 600;
-                text-decoration: none;
-                transition: all 0.3s ease;
-                margin-top: 20px;
+                margin: 5px;
+                flex: 1 0 auto;
+                max-width: 200px;
+                justify-content: center;
             }
-
-            .profil-btn:hover {
-                background-color: #bf2849;
-            }
-
-            .container {
-                flex: 1;
-                margin-left: 270px; /* Marge pour la barre latérale */
-                padding: 2rem;
-            }
-            @media (max-width: 768px) {
-
-
-                .sidebar {
-                    width: 200px;
-                }
-
-                .main-content {
-                    padding: 15px;
-                }
-
-
-                a {
-                    padding: 6px 10px;
-                    font-size: 13px;
-                }
-            }
+        }
     </style>
-    <%
-            if ( (session.getAttribute("admin") == null && session.getAttribute("client") == null)) {
-                response.sendRedirect("Authentification.jsp");
-                return;
-            }
-        %>
 </head>
 <body>
     <div class="sidebar">
         <img src="images/logo.png" alt="Logo" class="sidebar-logo">
-        <h2>Admin Dashboard</h2>
-        <a href="VoitureController" class="profil-btn">Voitures</a>
-        <a href="profil.jsp" class="profil-btn">Profil</a>
-        <a href="DeconnexionController" class="profil-btn">Déconnexion</a>
+        <h2>Tableau de Bord</h2>
+        
+        <div class="nav-links">
+            <a href="VoitureController" class="profil-btn">
+                <i class="fas fa-car"></i> Voitures
+            </a>
+            <a href="profil.jsp" class="profil-btn">
+                <i class="fas fa-user"></i> Profil
+            </a>
+            <a href="DeconnexionController" class="profil-btn">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
     </div>
-    <h1>Historique de mes locations</h1>
-<%
-    Client client = (Client) session.getAttribute("client");
-    if (client == null) {
-        response.sendRedirect("Authentification.jsp");
-        return;
-    }
 
-    LocationService ls = new LocationService();
-    List<Location> locations = ls.getLocationsByClient(client.getId());
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    <div class="main-content">
+        <h1>Historique de mes locations</h1>
+        
+        <%
+            Client client = (Client) session.getAttribute("client");
+            if (client == null) {
+                response.sendRedirect("Authentification.jsp");
+                return;
+            }
 
-        if (locations != null && !locations.isEmpty()) {
-    %>
-        <table>
-    <thead>
-        <tr>
-            <th>Voiture</th>
-            <th>Date début</th>
-            <th>Date fin</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% for (Location loc : locations) { %>
-            <tr>
-                <td><%= loc.getVoiture().getMarque() %> <%= loc.getVoiture().getModele() %></td>
-                <td><%= sdf.format(loc.getId().getDateDebut()) %></td>
-                <td><%= sdf.format(loc.getDateFin()) %></td>
-            </tr>
-        <% } %>
-    </tbody>
-</table>
-    <%
-        } else {
-    %>
-        <p style="text-align:center;">Aucune location trouvée.</p>
-    <%
-        }
-    %>
+            LocationService ls = new LocationService();
+            List<Location> locations = ls.getLocationsByClient(client.getId());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+            if (locations != null && !locations.isEmpty()) {
+        %>
+        <table class="rental-table">
+            <thead>
+                <tr>
+                    <th>Voiture</th>
+                    <th>Date début</th>
+                    <th>Date fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (Location loc : locations) { %>
+                <tr>
+                    <td>
+                        <div class="car-info">
+                            <div class="car-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div>
+                                <strong><%= loc.getVoiture().getMarque() %> <%= loc.getVoiture().getModele() %></strong>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="date-badge">
+                            <i class="far fa-calendar-alt"></i> <%= sdf.format(loc.getId().getDateDebut()) %>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="date-badge">
+                            <i class="far fa-calendar-alt"></i> <%= sdf.format(loc.getDateFin()) %>
+                        </span>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+        <%
+            } else {
+        %>
+        <div class="no-rentals">
+            <i class="far fa-folder-open"></i>
+            <p>Aucune location trouvée.</p>
+        </div>
+        <%
+            }
+        %>
+    </div>
 </body>
 </html>

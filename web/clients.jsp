@@ -8,340 +8,401 @@
 %>
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Liste des Voitures</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
-        <style>
-            body {
-                font-family: 'Montserrat', sans-serif;
-                background: linear-gradient(to right, #f8f9fa, #e9ecef);
-                position: relative;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 1200px;  /* Ou une autre valeur que tu préfères */
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Voitures | Luxury Drive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #34495e;
+            --success: #27ae60;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2b3c 100%);
+            color: white;
+            padding: 30px 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        .sidebar-logo {
+            width: 160px;
+            margin: 0 auto 30px;
+            display: block;
+        }
+        
+        .sidebar h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .sidebar-link i {
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+            max-width: calc(100% - 280px);
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .page-subtitle {
+            color: var(--text);
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+        
+        /* Cars Grid */
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .car-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .car-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .car-body {
+            padding: 20px;
+        }
+        
+        .car-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .car-model {
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .car-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .car-detail-label {
+            color: #777;
+        }
+        
+        .car-detail-value {
+            font-weight: 500;
+        }
+        
+        .car-price {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .rent-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .rent-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        /* Modal Styling */
+        .modal-header {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .modal-title {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .modal-footer {
+            border-top: none;
+        }
+        
+        .btn-confirm {
+            background-color: var(--success);
+            border: none;
+        }
+        
+        .btn-confirm:hover {
+            background-color: #219653;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
             .sidebar {
-                width: 250px;
-                background-color: #333;
-                color: white;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100%;
+                width: 220px;
+                padding: 25px 10px;
             }
-
-            .sidebar-logo {
-                width: 200px; 
-                height: auto;
-                margin-bottom: 20px;
+            
+            .main-content {
+                margin-left: 250px;
+                padding: 30px;
+                max-width: calc(100% - 250px);
             }
-
-            h1, h2 {
-                text-align: center; /* Assurer que les titres sont bien centrés */
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
                 width: 100%;
-            }
-
-
-            h1 {
-                font-weight: 700;
-                color: #343a40;
-                margin-bottom: 2rem;
-            }
-
-            .car-card {
-                border: none;
-                border-radius: 15px;
-                overflow: hidden;
-                transition: all 0.3s ease-in-out;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-                background-color: white;
-            }
-
-            .car-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 16px 24px rgba(0, 0, 0, 0.15);
-            }
-
-            .card-img-top {
-                height: 200px;
-                object-fit: cover;
-            }
-
-            .card-title {
-                font-weight: 600;
-            }
-
-            .badge-available {
-                background-color: #28a745;
-            }
-
-            .badge-unavailable {
-                background-color: #dc3545;
-            }
-
-            .card-body {
-                padding: 1.25rem;
-            }
-
-            .car-type {
-                background-color: #6c757d;
-                color: white;
-                padding: 0.25rem 0.6rem;
-                font-size: 0.8rem;
-                border-radius: 10px;
-                display: inline-block;
-            }
-
-            a {
-                text-decoration: none;
-                padding: 8px 12px;
-                border-radius: 5px;
-                font-weight: 500;
-                font-size: 14px;
-                transition: all 0.3s ease;
-                display: inline-block;
-            }
-
-            a[href*="delete"] {
-                background-color: #ff5252;
-                color: white;
-            }
-
-            a[href*="delete"]:hover {
-                background-color: #e04646;
-            }
-
-            a[href*="update"] {
-                background-color: #FFCC00;
-                color: white;
-            }
-
-            a[href*="update"]:hover {
-                background-color: #fde278;
-            }
-
-            .button {
-                display: inline-block;
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 25px;
-                font-weight: 600;
-                transition: background-color 0.3s ease, transform 0.2s ease;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .button:hover {
-                background-color: #3e9142;
-                transform: scale(1.05);
-                text-decoration: none;
-            }
-            .sidebar {
-                width: 250px;
-                background-color: #333;
-                color: white;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .sidebar-logo {
-                width: 180px; 
+                position: relative;
                 height: auto;
-                margin-bottom: 30px;
+                padding: 20px;
             }
-
-            .sidebar h2 {
-                margin-bottom: 40px;
-                font-size: 24px;
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+                max-width: 100%;
             }
-
-            .sidebar a {
-                color: white;
-                text-decoration: none;
-                display: block;
-                padding: 10px;
-                font-size: 16px;
-                margin-bottom: 15px;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
+            
+            .nav-links {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-
-            .sidebar a:hover {
-                background-color: #444;
+            
+            .sidebar-link {
+                margin: 5px;
+                flex: 1 0 auto;
+                max-width: 200px;
             }
-
-            .profil-btn {
-                background-color: #9c1330;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 30px;
-                font-weight: 600;
-                text-decoration: none;
-                transition: all 0.3s ease;
-                margin-top: 20px;
+            
+            .cars-grid {
+                grid-template-columns: 1fr;
             }
-
-            .profil-btn:hover {
-                background-color: #bf2849;
-            }
-
-            .container {
-                flex: 1;
-                margin-left: 270px; /* Marge pour la barre latérale */
-                padding: 2rem;
-            }
-            @media (max-width: 768px) {
-
-
-                .sidebar {
-                    width: 200px;
-                }
-
-                .main-content {
-                    padding: 15px;
-                }
-
-
-                a {
-                    padding: 6px 10px;
-                    font-size: 13px;
-                }
-            }
-            .btn-louer {
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 25px;
-                font-weight: 600;
-                border: none;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-
-            .btn-louer:hover {
-                background-color: #3e9142;
-                transform: scale(1.05);
-            }
-        </style>
-        <%
-            if ((session.getAttribute("admin") == null && session.getAttribute("client") == null)) {
-                response.sendRedirect("Authentification.jsp");
-                return;
-            }
-        %>
-    </head>
-    <body>
-
-        <div class="sidebar">
-            <img src="images/logo.png" alt="Logo" class="sidebar-logo">
-            <h2>Admin Dashboard</h2>
-            <a href="VoitureController" class="profil-btn">Voitures</a>
-            <a href="profil.jsp" class="profil-btn">Profil</a>
-            <a href="DeconnexionController" class="profil-btn">Déconnexion</a>
+        }
+    </style>
+    <%
+        if ((session.getAttribute("admin") == null && session.getAttribute("client") == null)) {
+            response.sendRedirect("Authentification.jsp");
+            return;
+        }
+    %>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="images/logo.png" alt="Logo" class="sidebar-logo">
+        <h2>Tableau de Bord</h2>
+        
+        <div class="nav-links">
+            <a href="VoitureController" class="sidebar-link active">
+                <i class="fas fa-car"></i> Voitures
+            </a>
+            <a href="profil.jsp" class="sidebar-link">
+                <i class="fas fa-user"></i> Profil
+            </a>
+            <a href="DeconnexionController" class="sidebar-link">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
         </div>
+    </div>
 
-        <!-- Contenu principal -->
-        <div class="container">
-            <h1 class="my-4 text-center">Liste des Voitures disponibles</h1>
-            <h2 class="my-4 text-center">Louez, Conduisez, Explorez</h2>
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Liste des Voitures disponibles</h1>
+            <p class="page-subtitle">Louez, Conduisez, Explorez</p>
+        </div>
+        
+        <div class="cars-grid">
+            <c:forEach var="voiture" items="${listeVoitures}">
+                <div class="car-card">
+                    <img src="${pageContext.request.contextPath}/images/${voiture.photo}" class="car-img" alt="${voiture.marque} ${voiture.modele}">
+                    
+                    <div class="car-body">
+                        <h3 class="car-title">${voiture.marque}</h3>
+                        <p class="car-model">${voiture.modele}</p>
+                        
+                        <div class="car-detail">
+                            <span class="car-detail-label">Année :</span>
+                            <span class="car-detail-value">${voiture.annee}</span>
+                        </div>
+                        
+                        <div class="car-price">
+                            ${voiture.prix} MAD / jour
+                        </div>
+                        
+                        <button class="rent-btn" data-bs-toggle="modal" data-bs-target="#locationModal" data-voiture-id="${voiture.id}">
+                            <i class="fas fa-calendar-alt"></i> Réserver maintenant
+                        </button>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
 
-            <div class="row" id="car-list">
-                <c:forEach var="voiture" items="${listeVoitures}">
-                    <div class="col-md-4 mb-4">
-                        <div class="card car-card">
-                            <img src="${pageContext.request.contextPath}/images/${voiture.photo}" class="card-img-top" alt="Image de ${voiture.marque}">
-
-                            <div class="card-body">
-                                <h4 class="card-title fw-bold text-primary">${voiture.marque}</h4>
-                                <h5 class="card-text mb-2">Modèle : <span class="text-dark">${voiture.modele}</span></h5>
-                                <p class="card-text mb-1">Année : <strong>${voiture.annee}</strong></p>
-                                <h6 class="card-text mb-3">Prix/j : <span class="text-success fw-semibold">${voiture.prix} MAD</span></h6>
-
-                                <div class="d-flex justify-content-center">
-                                    <button class="button text-decoration-none btn-louer" data-voiture-id="${voiture.id}">Louer</button>
-                                </div>
-                            </div>
-
+    <!-- Modal de réservation -->
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Réservation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <form action="${pageContext.request.contextPath}/LocationController" method="post">
+                    <input type="hidden" name="voiture" id="modalVoitureId">
+                    
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Date de début</label>
+                            <input type="date" name="dateDebut" class="form-control" required 
+                                   min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())%>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Date de fin</label>
+                            <input type="date" name="dateFin" class="form-control" required>
                         </div>
                     </div>
-                </c:forEach>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary btn-confirm">Confirmer</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
-        <!-- Bootstrap JS et dépendances -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <div class="modal fade" id="locationModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="${pageContext.request.contextPath}/LocationController" method="post">
-                        <input type="hidden" name="voiture" id="modalVoitureId">
-
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label">Date de début</label>
-                                <input type="date" name="dateDebut" class="form-control" required 
-                                       min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())%>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Date de fin</label>
-                                <input type="date" name="dateFin" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button href="profil.jsp" type="submit" class="btn btn-primary">Confirmer</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Gestion du modal de location
-                const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
-                        document.querySelectorAll('.btn-louer').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    document.getElementById('modalVoitureId').value = this.dataset.voitureId;
-                    locationModal.show();
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion du modal de location
+            const locationModal = document.getElementById('locationModal');
+            if (locationModal) {
+                locationModal.addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+                    const voitureId = button.getAttribute('data-voiture-id');
+                    document.getElementById('modalVoitureId').value = voitureId;
                 });
-            });
+            }
+            
             // Validation des dates
             const dateDebut = document.querySelector('input[name="dateDebut"]');
-                    const dateFin = document.querySelector('input[name="dateFin"]');
-                    dateDebut.addEventListener('change', function () {
-                        dateFin.min = this.value;
-                    });
-            });
-        </script>
-    </body>
+            const dateFin = document.querySelector('input[name="dateFin"]');
+            
+            if (dateDebut && dateFin) {
+                dateDebut.addEventListener('change', function() {
+                    dateFin.min = this.value;
+                });
+            }
+        });
+    </script>
+</body>
 </html>

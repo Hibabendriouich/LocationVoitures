@@ -34,7 +34,7 @@ public class LocationController extends HttpServlet {
         }
     }
 
-    private void afficherHistorique(HttpServletRequest request, HttpServletResponse response)
+  private void afficherHistorique(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     HttpSession session = request.getSession();
     Client client = (Client) session.getAttribute("client");
@@ -46,11 +46,10 @@ public class LocationController extends HttpServlet {
     
     try {
         LocationDao locationDao = new LocationDao();
-        List<Location> locations = locationDao.getLocationsByClient(client.getId());
+        List<Location> locationList = locationDao.getLocationsByClient(client.getId());
         
-        request.setAttribute("locations", locations);
-        request.getRequestDispatcher(request.getContextPath() + "/historiqueLocations.jsp")
-               .forward(request, response);
+        request.setAttribute("location", locationList);
+        request.getRequestDispatcher("/historiqueLocations.jsp").forward(request, response);
     } catch (Exception e) {
         e.printStackTrace();
         response.sendRedirect(request.getContextPath() + "/error.jsp");

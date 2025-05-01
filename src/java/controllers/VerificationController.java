@@ -22,16 +22,17 @@ public class VerificationController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String code = (String) request.getAttribute("code");
+        String code = request.getParameter("code");
 
         HttpSession session = request.getSession();
-        String verificationCode = (String) session.getAttribute("verificationCode");
+        String codeStocke = (String) session.getAttribute("code_verification");
+        String codeSaisi = request.getParameter("code");
 
-        if (verificationCode != null && verificationCode.equals(code)) {
-            request.getRequestDispatcher("updatePassword.jsp").forward(request, response); 
+        if (codeStocke != null && codeStocke.equals(codeSaisi)) {
+            response.sendRedirect("updateMotdePasse.jsp");
         } else {
             request.setAttribute("msg", "Code de vérification incorrect");
-            request.getRequestDispatcher("verification.jsp").forward(request, response); 
+            request.getRequestDispatcher("verification.jsp").forward(request, response);
         }
     }
 

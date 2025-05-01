@@ -36,11 +36,11 @@ public class Location {
     @Column(name = "dateFin")     
     private Date dateFin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client", referencedColumnName = "id", insertable = false, updatable = false)
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "voiture", referencedColumnName = "id", insertable = false, updatable = false)
     private Voiture voiture;
 

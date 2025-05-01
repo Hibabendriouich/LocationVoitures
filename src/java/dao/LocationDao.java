@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -79,5 +80,25 @@ public class LocationDao extends AbstractDao<Location> {
             }
         }
     }
+    public List<Object[]> countLocationsByType() throws Exception {
+    Session session = null;
+    Transaction tx = null;
+    try {
+        session = HibernateUtil.getSessionFactory().openSession();
+        tx = session.beginTransaction();
+        
+        String hql = "SELECT v.type.nom, COUNT(l) FROM Location l JOIN l.voiture v GROUP BY v.type.nom";
+        Query query = session.createQuery(hql);
+        List<Object[]> results = query.list();
+        
+        tx.commit();
+        return results;
+    } catch (Exception e) {
+        if (tx != null) tx.rollback();
+        throw e;
+    } finally {
+        if (session != null) session.close();
+    }
+}
 
 }

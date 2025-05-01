@@ -7,7 +7,10 @@ package services;
 
 import entities.Location;
 import java.util.List;
-import javax.persistence.EntityManager;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -16,16 +19,24 @@ import javax.persistence.EntityManager;
 
 public class LocationService {
 
-    private EntityManager em;
-    
-    public List<Location> getLocationsByClient(int client) {
-        try {
-            return em.createQuery("SELECT l FROM Location l WHERE l.client.id = :client", Location.class)
-                    .setParameter("client", client)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+public List<Location> getLocationsByClient(int client) {
+    Session session = null;
+    Transaction tx = null;
+    List<Location> locations = null;
+    try {
+        session = HibernateUtil.getSessionFactory().openSession();
+        tx = session.beginTransaction();
+        
+        locations = session.createQuery("FROM Location l JOIN FETCH l.voiture WHERE l.client.id = :client")
+                 .setParameter("client", client)
+                 .list();
+        
+        tx.commit();
+    } catch (HibernateException ex) {
+        if (tx != null) tx.rollback();
+        ex.printStackTrace();
+    } finally {
+        if (session != null) session.close();
     }
-}
+    return locations;
+}}

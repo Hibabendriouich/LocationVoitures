@@ -1,7 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    int codeAleatoire = (int)(Math.random() * 900000) + 100000;
+    String codeGenere = String.valueOf(codeAleatoire);
+    session.setAttribute("verificationCode", codeGenere);
+%>
+
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+       
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Verification</title>
         <!-- Bootstrap CSS link -->

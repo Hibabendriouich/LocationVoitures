@@ -60,6 +60,11 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 - ⚡ **AJAX** pour la gestion en temps réel de la disponibilité des voitures
 
 ---
+## **Logo** 🧩
+
+![Logo](./images/logo.png)
+
+---
 
 ## **Diagramme de classe** 🧩
 
@@ -73,20 +78,5 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 
 ---
 
-## **Exécution des tests** 🧪
-### **Création de tables**
-![Création de tables](./images/c1.png)  
-![Création de tables](./images/c2.png)  
-### **Insertion de données**
-![Insertion](./images/insertion.png)
-### **Filtrage**
-![Filtre](./images/filtre.png)
-
-### **Page d'authentification**
-![Login](./images/login.png)
-### **Page d'inscription**
-![Inscription](./images/inscription.png)
-### **Page Liste des clients**
-![Liste clients](./images/liste.png)
-### **Page Mot de passe oublié**
-![Mot de passe oublié](./images/mdp.png)
+## **Vidéo démonstrative** 
+https://github.com/user-attachments/assets/0cd64a3c-202a-4f8a-9c9e-5f4c38bf0207
