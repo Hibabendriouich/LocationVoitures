@@ -5,8 +5,10 @@
 - [Problématique](#problématique)
 - [Objectifs](#objectifs)
 - [Technologies Utilisées](#technologies-utilisées)
+- [Logo](#logo)
 - [Diagramme de classe](#diagramme-de-classe)
 - [Modèle conceptuel de la base de donnée](#modèle-conceptuel-de-la-base-de-donnée)
+- [Architecture](#architecture)
 - [Exécution des tests](#exécution-des-tests)
 
 ---
@@ -78,5 +80,11 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 
 ---
 
+## **Architecture** 🧩
+
+![Architecture](./images/archi.png)
+
+---
+
 ## **Vidéo démonstrative** 
-https://github.com/user-attachments/assets/0cd64a3c-202a-4f8a-9c9e-5f4c38bf0207
+https://github.com/user-attachments/assets/4b28919f-b81b-426d-a122-c7118a093b99
