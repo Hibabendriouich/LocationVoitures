@@ -10,7 +10,6 @@
 - [Modèle conceptuel de la base de donnée](#modèle-conceptuel-de-la-base-de-donnée)
 - [Architecture](#architecture)
 - [Exécution des tests](#exécution-des-tests)
-- [Démonstration](#demo)
 ---
 
 ## **Contexte** 🌐
@@ -87,4 +86,4 @@ Le but de ce projet est de créer une solution complète et intégrée pour la g
 ---
 
 ## **Vidéo démonstrative** 
-![Demo] https://github.com/user-attachments/assets/4b28919f-b81b-426d-a122-c7118a093b99
+https://github.com/user-attachments/assets/4b28919f-b81b-426d-a122-c7118a093b99
